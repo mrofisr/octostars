@@ -60,7 +60,7 @@ function App() {
             <p className="text-2xl font-bold text-gray-800 capitalize">
               Telah dipercaya oleh
             </p>
-            <div className="grid grid-cols-2 md:grid-cols-2 gap-4 mt-4">
+            <div className="grid grid-cols-4 gap-4 mt-4">
               <img src="/client-1.png" alt="Client 1" />
               <img src="/client-2.png" alt="Client 2" />
               <img src="/client-3.png" alt="Client 3" />
@@ -99,9 +99,8 @@ function App() {
                   memberikan layanan yang terbaik bagi para pelanggan kami.
                 </p>
               </div>
-
               <div>
-                <img src="/about.png" alt="About" />
+                <img src="/about.png" alt="About" className="w-96" />
               </div>
             </div>
           </div>
