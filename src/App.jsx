@@ -60,11 +60,22 @@ function App() {
             <p className="text-2xl font-bold text-gray-800 capitalize">
               Telah dipercaya oleh
             </p>
-            <div className="grid grid-cols-4 gap-4 mt-4">
-              <img src="/client-1.png" alt="Client 1" />
-              <img src="/client-2.png" alt="Client 2" />
-              <img src="/client-3.png" alt="Client 3" />
-              <img src="/client-4.png" alt="Client 4" />
+            <div class="relative flex overflow-x-hidden">
+              <div class="py-4 animate-marquee whitespace-nowrap grid grid-cols-5">
+                <img src="/logo-1.png" alt="Logo 1" class="mx-4 h-16" />
+                <img src="/logo-2.png" alt="Logo 2" class="mx-4 h-16" />
+                <img src="/logo-3.png" alt="Logo 3" class="mx-4 h-16" />
+                <img src="/logo-4.png" alt="Logo 4" class="mx-4 h-16" />
+                <img src="/logo-5.png" alt="Logo 5" class="mx-4 h-16" />
+              </div>
+
+              <div class="absolute top-0 py-4 animate-marquee2 whitespace-nowrap grid grid-cols-5">
+                <img src="/logo-1.png" alt="Logo 1" class="mx-4 h-16" />
+                <img src="/logo-2.png" alt="Logo 2" class="mx-4 h-16" />
+                <img src="/logo-3.png" alt="Logo 3" class="mx-4 h-16" />
+                <img src="/logo-4.png" alt="Logo 4" class="mx-4 h-16" />
+                <img src="/logo-5.png" alt="Logo 5" class="mx-4 h-16" />
+              </div>
             </div>
           </div>
         </section>
