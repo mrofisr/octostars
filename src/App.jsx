@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
+
 const menu = [
   {
     name: "Beranda",
-    url: "/",
+    url: "#",
   },
   {
     name: "Tentang",
@@ -19,23 +21,44 @@ const menu = [
 
 function App() {
   const year = new Date().getFullYear();
+  const [onScroll, setOnScroll] = useState(false);
+  const TOP_OFFSET = 50;
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > TOP_OFFSET) {
+        setOnScroll(true);
+      } else {
+        setOnScroll(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <>
-      <nav className="top-0 fixed w-full z-50 bg-white shadow-md">
-        <div className="container mx-auto flex justify-between items-center p-4 md:p-2">
+      <nav
+        className={`top-0 fixed w-full z-50 bg-white ${
+          onScroll ? "shadow-md" : ""
+        }`}
+      >
+        <div className="container mx-auto flex justify-between items-center px-16">
           <a href="/">
             <img
               src="/logo.png"
               alt="Sinergi Karya Solutif"
-              className="h-16 w-16"
+              className="h-20 w-auto"
             />
           </a>
-          <ul className="flex justify-center space-x-4">
+          <ul className="flex justify-center space-x-8">
             {menu.map((item) => (
               <li>
                 <a
                   href={item.url}
-                  className="hover:text-gray-500 font-sans font-semibold"
+                  className="hover:text-yellow-500 font-sans font-semibold"
                 >
                   {item.name}
                 </a>
@@ -60,22 +83,11 @@ function App() {
             <p className="text-2xl font-bold text-gray-800 capitalize">
               Telah dipercaya oleh
             </p>
-            <div class="relative flex overflow-x-hidden">
-              <div class="py-4 animate-marquee whitespace-nowrap grid grid-cols-5">
-                <img src="/logo-1.png" alt="Logo 1" class="mx-4 h-16" />
-                <img src="/logo-2.png" alt="Logo 2" class="mx-4 h-16" />
-                <img src="/logo-3.png" alt="Logo 3" class="mx-4 h-16" />
-                <img src="/logo-4.png" alt="Logo 4" class="mx-4 h-16" />
-                <img src="/logo-5.png" alt="Logo 5" class="mx-4 h-16" />
-              </div>
-
-              <div class="absolute top-0 py-4 animate-marquee2 whitespace-nowrap grid grid-cols-5">
-                <img src="/logo-1.png" alt="Logo 1" class="mx-4 h-16" />
-                <img src="/logo-2.png" alt="Logo 2" class="mx-4 h-16" />
-                <img src="/logo-3.png" alt="Logo 3" class="mx-4 h-16" />
-                <img src="/logo-4.png" alt="Logo 4" class="mx-4 h-16" />
-                <img src="/logo-5.png" alt="Logo 5" class="mx-4 h-16" />
-              </div>
+            <div className="grid grid-cols-4 gap-4 mt-4">
+              <img src="/client-1.png" alt="Client 1" />
+              <img src="/client-2.png" alt="Client 2" />
+              <img src="/client-3.png" alt="Client 3" />
+              <img src="/client-4.png" alt="Client 4" />
             </div>
           </div>
         </section>
@@ -83,7 +95,7 @@ function App() {
           id="tentang"
           className="flex flex-col items-center justify-center min-h-screen"
         >
-          <div className="container mx-auto text-center mt-8">
+          <div className="container mx-auto text-center mt-28 mb-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <p className="text-2xl font-bold text-gray-800 uppercase">
@@ -110,13 +122,17 @@ function App() {
                   memberikan layanan yang terbaik bagi para pelanggan kami.
                 </p>
               </div>
-              <div>
-                <img src="/about.png" alt="About" className="w-96" />
+              <div className="flex justify-center items-center">
+                <img
+                  src="/about.png"
+                  alt="About"
+                  className="w-96 hidden md:block"
+                />
               </div>
             </div>
           </div>
           {/* Visi */}
-          <div className="container mx-auto text-center mt-8">
+          <div className="container mx-auto text-center mt-16">
             <p className="text-2xl font-bold text-gray-800 uppercase">Visi</p>
             <blockquote className="relative text-center max-w-lg mx-auto mt-4 font-light">
               <div className="relative z-10">
