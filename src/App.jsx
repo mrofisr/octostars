@@ -4,18 +4,22 @@ const menu = [
   {
     name: "Beranda",
     url: "#",
+    hidden: true,
   },
   {
     name: "Tentang",
     url: "#tentang",
+    hidden: false,
   },
   {
     name: "Layanan",
     url: "#layanan",
+    hidden: false,
   },
   {
     name: "Kontak",
     url: "#kontak",
+    hiden: false,
   },
 ];
 
@@ -90,17 +94,20 @@ function App() {
           onScroll ? "shadow-md" : ""
         }`}
       >
-        <div className="container mx-auto flex justify-between items-center px-16">
+        <div className="container mx-auto flex justify-between items-center px-8">
           <a href="/">
             <img
               src="/logo.png"
               alt="Sinergi Karya Solutif"
-              className="h-20 w-auto"
+              className="h-20 w-auto block"
             />
           </a>
           <ul className="flex justify-center space-x-8">
             {menu.map((item) => (
-              <li key={item.name}>
+              <li
+                key={item.name}
+                className={`${item.hidden ? "hidden md:block" : ""}`}
+              >
                 <a
                   href={item.url}
                   className="font-sans font-semibold text-gray-900 hover:text-gray-600"
