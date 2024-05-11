@@ -19,6 +19,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { Input } from "@/components/ui/input";
 
 const Stars = () => {
   const slug = useParams();
@@ -33,22 +34,57 @@ const Stars = () => {
   }, [slug.username, page]);
   return (
     <>
-      <div className="container mx-auto flex items-center justify-center py-8">
+      <div className="container mx-auto items-center justify-center py-8">
+        <h1 className="text-3xl font-bold text-black font-mono text-center">
+          {slug.username} <span className="text-amber-500">Stars</span>
+        </h1>
+        <div className="grid grid-cols-3 py-4 space-x-2">
+          <Input
+            id="search"
+            type="text"
+            placeholder="Search Repo"
+            onChange={() => {}}
+          />
+        </div>
         <div className="w-full grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
-          {repo.map((item) => (
-            <Card key={item.id}>
-              <CardHeader>
-                <CardTitle>{item.name}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>{item.description}</CardDescription>
-              </CardContent>
-              <CardFooter>
-                <IoStarSharp className="text-yellow-400" size={20} />
-                <CardDescription>{item.stargazers_count}</CardDescription>
-              </CardFooter>
-            </Card>
-          ))}
+          {/* Skeleton */}
+          {repo.length === 0
+            ? Array.from({ length: 9 }).map((_, i) => (
+                <Card key={i}>
+                  <CardHeader>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
+                      <div className="w-24 h-4 bg-gray-200 rounded-full"></div>
+                    </div>
+                  </CardHeader>
+                </Card>
+              ))
+            : repo.map((item) => (
+                <>
+                  <Card key={item.id}>
+                    <CardHeader>
+                      <CardTitle>{item.name}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <CardDescription>{item.description}</CardDescription>
+                    </CardContent>
+                    <CardContent className="flex flex-wrap space-x-2 flex-col sm:flex-row">
+                      {item.topics.slice(0, 4).map((topic) => (
+                        <span
+                          key={topic}
+                          className="text-xs bg-gray-200 px-2 py-1 rounded-full"
+                        >
+                          {topic}
+                        </span>
+                      ))}
+                    </CardContent>
+                    <CardFooter>
+                      <IoStarSharp className="text-yellow-400" size={20} />
+                      <CardDescription>{item.stargazers_count}</CardDescription>
+                    </CardFooter>
+                  </Card>
+                </>
+              ))}
         </div>
       </div>
       <div className="flex justify-center w-full pb-4">
