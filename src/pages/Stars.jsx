@@ -6,54 +6,78 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
 import GitRepoStars from "@/lib/github";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import { IoStarSharp } from "react-icons/io5";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 const Stars = () => {
   const slug = useParams();
+  const search = useLocation().search;
+  const page = new URLSearchParams(search).get("page") || 1;
   const [repo, setRepo] = useState([]);
-  console.log(slug.username);
   useEffect(() => {
-    GitRepoStars(slug.username)
+    GitRepoStars(slug.username, page)
       .then((data) => setRepo(data))
       .catch((error) => console.log(error))
       .finally(() => console.log("done"));
-  }, [slug]);
+  }, [slug.username, page]);
   return (
     <>
-      <div className="container mx-auto h-screen flex items-center justify-center">
+      <div className="container mx-auto flex items-center justify-center py-8">
         <div className="w-full grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
-          {repo.length > 0 ? (
-            <Card className="w-[350px]">
+          {repo.map((item) => (
+            <Card key={item.id}>
               <CardHeader>
-                <CardTitle>Create project</CardTitle>
-                <CardDescription>
-                  Deploy your new project in one-click.
-                </CardDescription>
+                <CardTitle>{item.name}</CardTitle>
               </CardHeader>
               <CardContent>
-                <form>
-                  <div className="grid w-full items-center gap-4"></div>
-                </form>
+                <CardDescription>{item.description}</CardDescription>
               </CardContent>
-              <CardFooter className="flex justify-between"></CardFooter>
+              <CardFooter>
+                <IoStarSharp className="text-yellow-400" size={20} />
+                <CardDescription>{item.stargazers_count}</CardDescription>
+              </CardFooter>
             </Card>
-          ) : (
-            <>
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div className="flex flex-col space-y-3 border-2 border-gray-200 p-8 rounded-xl w-[350px] h-[250px] items-center justify-center">
-                  <Skeleton className="h-[125px] w-[250px] rounded-xl" />
-                  <div className="space-y-2">
-                    <Skeleton className="h-4 w-[250px]" />
-                    <Skeleton className="h-4 w-[200px]" />
-                  </div>
-                </div>
-              ))}
-            </>
-          )}
+          ))}
         </div>
+      </div>
+      <div className="flex justify-center w-full pb-4">
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious href="#" />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="#">1</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="#" isActive>
+                2
+              </PaginationLink>
+            </PaginationItem>
+            <div className="items-center md:flex hidden">
+              <PaginationItem>
+                <PaginationLink href="#">3</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            </div>
+            <PaginationItem>
+              <PaginationNext href="#" />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </>
   );
