@@ -62,26 +62,30 @@ const Stars = () => {
             : repo.map((item) => (
                 <>
                   <Card key={item.id}>
-                    <CardHeader>
-                      <CardTitle>{item.name}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <CardDescription>{item.description}</CardDescription>
-                    </CardContent>
-                    <CardContent className="flex flex-wrap space-x-2 flex-col sm:flex-row">
-                      {item.topics.slice(0, 4).map((topic) => (
-                        <span
-                          key={topic}
-                          className="text-xs bg-gray-200 px-2 py-1 rounded-full"
-                        >
-                          {topic}
-                        </span>
-                      ))}
-                    </CardContent>
-                    <CardFooter>
-                      <IoStarSharp className="text-yellow-400" size={20} />
-                      <CardDescription>{item.stargazers_count}</CardDescription>
-                    </CardFooter>
+                    <a href={item.html_url} target="_blank" rel="noreferrer">
+                      <CardHeader>
+                        <CardTitle>{item.name}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <CardDescription>{item.description}</CardDescription>
+                      </CardContent>
+                      <CardContent className="flex flex-wrap space-x-2 flex-col sm:flex-row">
+                        {item.topics.slice(0, 4).map((topic) => (
+                          <span
+                            key={topic}
+                            className="text-xs bg-gray-200 px-2 py-1 rounded-full"
+                          >
+                            {topic}
+                          </span>
+                        ))}
+                      </CardContent>
+                      <CardFooter>
+                        <IoStarSharp className="text-yellow-400" size={20} />
+                        <CardDescription>
+                          {item.stargazers_count}
+                        </CardDescription>
+                      </CardFooter>
+                    </a>
                   </Card>
                 </>
               ))}
