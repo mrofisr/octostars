@@ -4,9 +4,9 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import Home from "./pages/Home";
-import Stars from "./pages/Stars";
-import Error from "./pages/Error";
+import Home from "@/pages/Home";
+import Stars from "@/pages/Stars";
+import Error from "@/pages/Error";
 
 const App = () => {
   return (
