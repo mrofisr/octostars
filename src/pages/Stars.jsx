@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import GitRepoStars from "@/lib/github";
 import { useState, useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { IoStarSharp } from "react-icons/io5";
 import {
   Pagination,
@@ -131,7 +131,7 @@ const Stars = () => {
             : repos.map((item) => (
                 <>
                   <Card key={item.id}>
-                    <a href={item.html_url} target="_blank" rel="noreferrer">
+                    <Link href={item.html_url} target="_blank" rel="noreferrer">
                       <CardHeader>
                         <CardTitle>{item.name}</CardTitle>
                       </CardHeader>
@@ -140,13 +140,13 @@ const Stars = () => {
                       </CardContent>
                       <CardContent className="flex flex-wrap space-x-2 flex-col sm:flex-row">
                         {item.topics.slice(0, 4).map((topic) => (
-                          <a
+                          <Link
                             key={topic}
                             href={"?topic=" + topic}
                             className="text-xs bg-gray-200 px-2 py-1 rounded-full"
                           >
                             {topic}
-                          </a>
+                          </Link>
                         ))}
                       </CardContent>
                       <CardFooter>
@@ -155,7 +155,7 @@ const Stars = () => {
                           {item.stargazers_count}
                         </CardDescription>
                       </CardFooter>
-                    </a>
+                    </Link>
                   </Card>
                 </>
               ))}
@@ -166,7 +166,7 @@ const Stars = () => {
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
-                href={`?page=${parseInt(page) + 1}`}
+                href={`?page=${page - 1}`}
                 onClick={handlePreviousPage}
               >
                 Next
@@ -188,7 +188,7 @@ const Stars = () => {
             </PaginationItem>
             <PaginationItem>
               <PaginationNext
-                href={`?page=${parseInt(page) + 1}`}
+                href={`?page=${page + 1}`}
                 onClick={handleNextPage}
               >
                 Next
