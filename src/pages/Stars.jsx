@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import GitRepoStars from "@/lib/github";
 import { useState, useEffect } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { IoStarSharp } from "react-icons/io5";
 import {
   Pagination,
@@ -101,7 +101,7 @@ const Stars = () => {
         <div className="w-full grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {/* Skeleton */}
           {loading
-            ? Array.from({ length: 9 }).map((_, i) => (
+            ? Array.from({ length: 30 }).map((_, i) => (
                 <Card key={i}>
                   <CardHeader>
                     <div className="flex items-center space-x-2 animate-pulse w-full">
@@ -109,27 +109,48 @@ const Stars = () => {
                       <div className="w-24 h-4 bg-gray-200 rounded-full"></div>
                     </div>
                   </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center space-x-2 animate-pulse w-full">
+                      <div className="w-24 h-4 bg-gray-200 rounded-full"></div>
+                    </div>
+                  </CardContent>
+                  <CardContent>
+                    <div className="flex items-center space-x-2 animate-pulse w-full">
+                      <div className="w-24 h-4 bg-gray-200 rounded-full"></div>
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <div className="flex items-center space-x-2 animate-pulse w-full">
+                      <div className="w-24 h-4 bg-gray-200 rounded-full"></div>
+                    </div>
+                  </CardFooter>
                 </Card>
               ))
             : repos.map((item) => (
                 <>
-                  <Card key={item.id}>
-                    <Link href={item.html_url} target="_blank" rel="noreferrer">
+                  <Card className="cursor-pointer w-full hover:shadow-lg">
+                    <a
+                      href={"https://github.com/" + item.full_name}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       <CardHeader>
-                        <CardTitle>{item.name}</CardTitle>
+                        <CardTitle className="text-lg capitalize">
+                          {item.name}
+                        </CardTitle>
                       </CardHeader>
                       <CardContent>
                         <CardDescription>{item.description}</CardDescription>
                       </CardContent>
                       <CardContent className="flex flex-wrap space-x-2 flex-col sm:flex-row">
                         {item.topics.slice(0, 4).map((topic) => (
-                          <Link
+                          <a
                             key={topic}
                             href={"?topic=" + topic}
                             className="text-xs bg-gray-200 px-2 py-1 rounded-full"
                           >
                             {topic}
-                          </Link>
+                          </a>
                         ))}
                       </CardContent>
                       <CardFooter>
@@ -138,7 +159,7 @@ const Stars = () => {
                           {item.stargazers_count}
                         </CardDescription>
                       </CardFooter>
-                    </Link>
+                    </a>
                   </Card>
                 </>
               ))}
