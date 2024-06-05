@@ -20,15 +20,6 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { Input } from "@/components/ui/input";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Checkbox } from "@/components/ui/checkbox";
 
 const Stars = () => {
   const slug = useParams();
@@ -36,6 +27,7 @@ const Stars = () => {
   const [page, setPage] = useState(
     new URLSearchParams(useLocation().search).get("page") || 1,
   );
+  const [search, setSearch] = useState("");
   const [pagination, setPagination] = useState({ next: null, last: null });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -58,18 +50,6 @@ const Stars = () => {
 
     fetchRepos();
   }, [slug.username, page]);
-
-  const handleNextPage = () => {
-    if (pagination.next) {
-      setPage((prevPage) => prevPage + 1);
-    }
-  };
-
-  const handlePreviousPage = () => {
-    if (page > 1) {
-      setPage((prevPage) => prevPage - 1);
-    }
-  };
   useEffect(() => {
     document.title = "OctoStars - The Github Stars Finder";
     const metaDescription = document.querySelector('meta[name="description"]');
@@ -86,8 +66,22 @@ const Stars = () => {
       document.head.appendChild(meta);
     }
   }, []);
+
+  const handleNextPage = () => {
+    if (pagination.next && page < pagination.last) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (page > 1) {
+      setPage((prevPage) => prevPage - 1);
+    }
+  };
+
   const totalPages = pagination.last ? Number(pagination.last) : 1;
-  console.log(page, totalPages);
+  const startPage = Math.max(page - 2, 1);
+  const endPage = Math.min(startPage + 4, totalPages);
   return (
     <>
       <div className="container mx-auto items-center justify-center py-8">
@@ -99,21 +93,10 @@ const Stars = () => {
             id="search"
             type="text"
             placeholder="Search Repo"
-            onChange={() => {}}
+            onChange={() => {
+              setSearch(document.getElementById("search").value);
+            }}
           />
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <button className="btn">Topics</button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>Topics</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Checkbox id="all" name="all" label="All" checked={true} />
-                <label htmlFor="all">All</label>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
         <div className="w-full grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {/* Skeleton */}
@@ -167,29 +150,44 @@ const Stars = () => {
             <PaginationItem>
               <PaginationPrevious
                 href={`?page=${page - 1}`}
-                onClick={handlePreviousPage}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handlePreviousPage();
+                }}
+                disabled={page === 1}
               >
-                Next
+                Previous
               </PaginationPrevious>
             </PaginationItem>
-            <PaginationItem>
-              {Array.from({ length: totalPages }, (_, i) => (
+            {Array.from(
+              { length: endPage - startPage + 1 },
+              (_, i) => startPage + i,
+            ).map((pageNum) => (
+              <PaginationItem key={pageNum}>
                 <PaginationLink
-                  key={i}
-                  href={`?page=${i + 1}`}
-                  onClick={() => setPage(i + 1)}
+                  href={`?page=${pageNum}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setPage(pageNum);
+                  }}
                 >
-                  {i + 1}
+                  {pageNum}
                 </PaginationLink>
-              ))}
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
+              </PaginationItem>
+            ))}
+            {endPage < totalPages && (
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            )}
             <PaginationItem>
               <PaginationNext
                 href={`?page=${page + 1}`}
-                onClick={handleNextPage}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNextPage();
+                }}
+                disabled={page === totalPages}
               >
                 Next
               </PaginationNext>
