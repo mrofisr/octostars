@@ -1,8 +1,25 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useEffect } from "react";
 import { TbBrandGithubFilled } from "react-icons/tb";
 
 const Home = () => {
+  useEffect(() => {
+    document.title = "OctoStars - The Github Stars Finder";
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute(
+        "content",
+        "Search for a Github user to see their starred repositories",
+      );
+    } else {
+      const meta = document.createElement("meta");
+      meta.name = "description";
+      meta.content =
+        "Search for a Github user to see their starred repositories";
+      document.head.appendChild(meta);
+    }
+  }, []);
   return (
     <>
       <div className="container mx-auto flex items-center justify-center py-8 h-screen">
