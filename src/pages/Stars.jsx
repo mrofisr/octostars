@@ -163,36 +163,38 @@ const Stars = () => {
       </div>
       <div className="flex justify-center w-full pb-4">
         <Pagination>
-          <PaginationItem>
-            <PaginationPrevious
-              href={`?page=${parseInt(page) + 1}`}
-              onClick={handlePreviousPage}
-            >
-              Next
-            </PaginationPrevious>
-          </PaginationItem>
-          <PaginationItem>
-            {Array.from({ length: totalPages }, (_, i) => (
-              <PaginationLink
-                key={i}
-                href={`?page=${i + 1}`}
-                onClick={() => setPage(i + 1)}
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                href={`?page=${parseInt(page) + 1}`}
+                onClick={handlePreviousPage}
               >
-                {i + 1}
-              </PaginationLink>
-            ))}
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext
-              href={`?page=${parseInt(page) + 1}`}
-              onClick={handleNextPage}
-            >
-              Next
-            </PaginationNext>
-          </PaginationItem>
+                Next
+              </PaginationPrevious>
+            </PaginationItem>
+            <PaginationItem>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <PaginationLink
+                  key={i}
+                  href={`?page=${i + 1}`}
+                  onClick={() => setPage(i + 1)}
+                >
+                  {i + 1}
+                </PaginationLink>
+              ))}
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext
+                href={`?page=${parseInt(page) + 1}`}
+                onClick={handleNextPage}
+              >
+                Next
+              </PaginationNext>
+            </PaginationItem>
+          </PaginationContent>
         </Pagination>
       </div>
     </>
