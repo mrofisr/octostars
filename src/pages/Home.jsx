@@ -44,6 +44,21 @@ const Home = () => {
           >
             Search
           </Button>
+          <div className="flex items-center flex-row space-x-2">
+            <a
+              href="/trending/repositories"
+              className="text-black font-sans font-light hover:text-amber-500"
+            >
+              Trending Repositories
+            </a>
+            <span className="text-black font-sans font-light">|</span>
+            <a
+              href="/trending/developers"
+              className="text-black font-sans font-light hover:text-amber-500"
+            >
+              Trending Developers
+            </a>
+          </div>
         </div>
       </div>
     </>
