@@ -3,16 +3,11 @@ const GitRepoStars = async (username, page, searchQuery = '') => {
   if (!username) {
     return { data: [], pagination: null };
   }
-
-  const headers = {
-    'Accept': 'application/vnd.github.v3+json',
-    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`, // Add your GitHub token here
-  };
-
+  
   // Function to fetch a single page
   const fetchPage = async (pageNum) => {
     const url = `https://api.github.com/users/${username}/starred?page=${pageNum}&per_page=100`;
-    const response = await fetch(url, { headers });
+    const response = await fetch(url);
     return {
       data: await response.json(),
       headers: response.headers
